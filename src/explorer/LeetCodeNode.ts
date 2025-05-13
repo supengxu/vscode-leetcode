@@ -42,6 +42,12 @@ export class LeetCodeNode {
     public get isFavorite(): boolean {
         return this.data.isFavorite;
     }
+    public get isHot100(): boolean {
+        return this.data.isHot100;
+    }
+    public get isClassic150(): boolean {
+        return this.data.isClassic150;
+    }
 
     public get isProblem(): boolean {
         return this.isProblemNode;

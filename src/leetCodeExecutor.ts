@@ -198,6 +198,14 @@ class LeetCodeExecutor implements Disposable {
         await this.executeCommandWithProgressEx("Updating the favorite list...", "node", commandParams);
     }
 
+    public async fetchHot100Problems(): Promise<string> {
+        return await this.executeCommandEx(this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "custom", "--url", "https://leetcode.cn/_next/data/LdkbymEZAqp5oj7_FRWLn/studyplan/top-100-liked.json?slug=top-100-liked"]);
+    }
+
+    public async fetchInterviewClassics150Problems(): Promise<string> {
+        return await this.executeCommandEx(this.nodeExecutable, [await this.getLeetCodeBinaryPath(), "custom", "--url", "https://leetcode.cn/_next/data/LdkbymEZAqp5oj7_FRWLn/studyplan/top-interview-150.json?slug=top-interview-150"]);
+    }
+
     public async getCompaniesAndTags(): Promise<{ companies: { [key: string]: string[] }, tags: { [key: string]: string[] } }> {
         // preprocess the plugin source
         const companiesTagsPath: string = path.join(this.leetCodeRootPath, "lib", "plugins", "company.js");

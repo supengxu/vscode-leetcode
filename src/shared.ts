@@ -73,6 +73,8 @@ export enum Endpoint {
 
 export interface IProblem {
     isFavorite: boolean;
+    isHot100: boolean;
+    isClassic150: boolean;
     locked: boolean;
     state: ProblemState;
     id: string;
@@ -87,6 +89,8 @@ export const defaultProblem: IProblem = {
     isFavorite: false,
     locked: false,
     state: ProblemState.Unknown,
+    isHot100: false,
+    isClassic150: false,
     id: "",
     name: "",
     difficulty: "",
@@ -101,6 +105,8 @@ export enum Category {
     Tag = "Tag",
     Company = "Company",
     Favorite = "Favorite",
+    Hot100 = "Hot100",
+    InterviewClassics150Problems = "InterviewClassics150Problems",
 }
 
 export const supportedPlugins: string[] = ["company", "solution.discuss", "leetcode.cn"];

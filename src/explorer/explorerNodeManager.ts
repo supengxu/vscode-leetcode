@@ -53,6 +53,14 @@ class ExplorerNodeManager implements Disposable {
                 id: Category.Favorite,
                 name: Category.Favorite,
             }), false),
+            new LeetCodeNode(Object.assign({}, defaultProblem, {
+                id: Category.Hot100,
+                name: Category.Hot100,
+            }), false),
+            new LeetCodeNode(Object.assign({}, defaultProblem, {
+                id: Category.InterviewClassics150Problems,
+                name: Category.InterviewClassics150Problems,
+            }), false),
         ];
     }
 
@@ -104,6 +112,26 @@ class ExplorerNodeManager implements Disposable {
         }
         this.sortSubCategoryNodes(res, Category.Tag);
         return res;
+    }
+
+    public getHot100Nodes(): LeetCodeNode[] {
+        const res: LeetCodeNode[] = [];
+        for (const node of this.explorerNodeMap.values()) {
+            if (node.isHot100) {
+                res.push(node);
+            }
+        }
+        return this.applySortingStrategy(res);
+    }
+
+    public getInterviewClassics150Nodes(): LeetCodeNode[] {
+        const res: LeetCodeNode[] = [];
+        for (const node of this.explorerNodeMap.values()) {
+            if (node.isClassic150) {
+                res.push(node);
+            }
+        }
+        return this.applySortingStrategy(res);
     }
 
     public getNodeById(id: string): LeetCodeNode | undefined {
