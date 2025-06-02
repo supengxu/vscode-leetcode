@@ -16,6 +16,8 @@ export async function listProblems(): Promise<IProblem[]> {
 
         const useEndpointTranslation: boolean = settingUtils.shouldUseEndpointTranslation();
         let result = await leetCodeExecutor.listProblems(true, useEndpointTranslation);
+        let resultEn = await leetCodeExecutor.listProblems(true,false);
+        const reg: RegExp = /^(.)\s(.{1,2})\s(.)\s\[\s*(\d*)\s*\]\s*(.*)\s*(Easy|Medium|Hard)\s*\((\s*\d+\.\d+ %)\)/;
         let classic150Problems = [
             88,
             27,
@@ -271,8 +273,17 @@ export async function listProblems(): Promise<IProblem[]> {
             287
         ]
         const problems: IProblem[] = [];
+        const linesEn: string[] = resultEn.split("\n");
+        const enNameMap: { [key: string]: string } = {};
+        for (const lineEn of linesEn) {
+            const matchEn: RegExpMatchArray | null = lineEn.match(reg);
+            if (matchEn && matchEn.length === 8) {
+                const idEn: string = matchEn[4].trim();
+                enNameMap[idEn] = matchEn[5].trim();
+            }
+        }
         const lines: string[] = result.split("\n");
-        const reg: RegExp = /^(.)\s(.{1,2})\s(.)\s\[\s*(\d*)\s*\]\s*(.*)\s*(Easy|Medium|Hard)\s*\((\s*\d+\.\d+ %)\)/;
+
         const { companies, tags } = await leetCodeExecutor.getCompaniesAndTags();
         for (const line of lines) {
             const match: RegExpMatchArray | null = line.match(reg);
@@ -286,6 +297,7 @@ export async function listProblems(): Promise<IProblem[]> {
                     isHot100: hot100Problems.includes(Number(id)),
                     isClassic150: classic150Problems.includes(Number(id)),
                     name: match[5].trim(),
+                    nameEn: enNameMap[id] ,
                     difficulty: match[6].trim(),
                     passRate: match[7].trim(),
                     companies: companies[id] || ["Unknown"],

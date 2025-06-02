@@ -34,6 +34,9 @@ export class LeetCodeNode {
     public get tags(): string[] {
         return this.data.tags;
     }
+    public get nameEn(): string {
+        return this.data.nameEn;
+    }
 
     public get companies(): string[] {
         return this.data.companies;
